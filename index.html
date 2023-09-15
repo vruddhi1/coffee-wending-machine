@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Vending Machine</title>
+    <style>
+        /* Enhanced CSS styles for a coffee shop website */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f2eb;
+            background-image: url('coffee-background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #7b572f;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .radio-input {
+            margin-right: 10px;
+        }
+        .proceed-button {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #7b572f;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .proceed-button:hover {
+            background-color: #6a4b26;
+        }
+        .background-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="background-image" src="C:\Users\user\Downloads\coffee-shop-image.jpg" alt="Coffee Shop Interior"> <!-- Replace with your shop image -->
+        <h1>Choose your Coffee</h1>
+        <form id="coffee-form">
+            <ul>
+                <li class="menu-item">
+                    <label>
+                        <input type="radio" name="coffee" class="radio-input" value="Espresso">
+                        Espresso - 100/-
+                    </label>
+                </li>
+                <li class="menu-item">
+                    <label>
+                        <input type="radio" name="coffee" class="radio-input" value="Cappuccino">
+                        Cappuccino - 150/-
+                    </label>
+                </li>
+                <li class="menu-item">
+                    <label>
+                        <input type="radio" name="coffee" class="radio-input" value="Latte">
+                        Latte - 200/-
+                    </label>
+                </li>
+                <li class="menu-item">
+                    <label>
+                        <input type="radio" name="coffee" class="radio-input" value="Americano">
+                        Americano - 250/-
+                    </label>
+                </li>
+                <!-- Add more coffee items here -->
+            </ul>
+            <button type="button" class="proceed-button" onclick="proceedToSecondPage()">Proceed to Order</button>
+        </form>
+    </div>
+
+    <script>
+        function proceedToSecondPage() {
+            const selectedCoffee = document.querySelector('input[name="coffee"]:checked');
+            if (selectedCoffee) {
+                // Store the selected coffee in sessionStorage
+                sessionStorage.setItem('selectedCoffee', selectedCoffee.value);
+                // Redirect to the second page
+                window.location.href = 'second_page.html';
+            } else {
+                alert('Please select a coffee first.');
+            }
+        }
+    </script>
+</body>
+</html>

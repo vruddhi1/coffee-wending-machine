@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Money</title>
+    <style>
+        /* Add your CSS styles here for styling the fourth page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .currency-list {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .currency-item {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .currency-item:hover {
+            background-color: #f2f2f2;
+        }
+        .total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .payment-status {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #7b572f;
+        }
+        .proceed-button, .cancel-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .proceed-button {
+            background-color: #7b572f;
+            color: #fff;
+        }
+        .proceed-button:hover {
+            background-color: #6a4b26;
+        }
+        .cancel-button {
+            background-color: #ddd;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Money</h1>
+        <div class="currency-list" id="currencyList">
+            <!-- Currency denominations will be generated here -->
+        </div>
+        <div class="total-amount" id="totalAmount">Total Amount: 0 INR</div>
+        <div class="payment-status" id="paymentStatus"></div>
+        <button type="button" class="proceed-button" onclick="checkPayment()">Pay</button>
+        <button type="button" class="cancel-button" onclick="cancelOrder()">Cancel</button>
+    </div>
+
+    <script>
+        const currencyDenominations = [500, 200, 100, 50, 20, 10]; // Available currency denominations
+        let currencyCounts = {}; // Initialize counts for each denomination
+
+        // Function to create a currency item and handle click events
+        function createCurrencyItem(denomination) {
+            const currencyItem = document.createElement('div');
+            currencyItem.classList.add('currency-item');
+            currencyItem.textContent = `${denomination} INR: ${currencyCounts[denomination] || 0}`;
+            
+            currencyItem.addEventListener('click', () => {
+                // Increment the count for the clicked denomination
+                currencyCounts[denomination] = (currencyCounts[denomination] || 0) + 1;
+                currencyItem.textContent = `${denomination} INR: ${currencyCounts[denomination]}`;
+                updateTotalAmount();
+            });
+            
+            return currencyItem;
+        }
+
+        // Function to update the total amount based on counts
+        function updateTotalAmount() {
+            let total = 0;
+            for (const denomination of currencyDenominations) {
+                total += (currencyCounts[denomination] || 0) * denomination;
+            }
+            document.getElementById('totalAmount').textContent = `Total Amount: ${total} INR`;
+        }
+
+        // Function to retrieve the total amount to be paid from sessionStorage (third page)
+        function getAmountToPay() {
+            const orderPrice = parseFloat(sessionStorage.getItem('orderPrice'));
+            return isNaN(orderPrice) ? 0 : orderPrice;
+        }
+
+        // Function to check the payment and display the payment result
+        function checkPayment() {
+            const amountToPay = getAmountToPay();
+            
+            let totalAmountPaid = 0;
+            for (const denomination of currencyDenominations) {
+                totalAmountPaid += (currencyCounts[denomination] || 0) * denomination;
+            }
+
+            const paymentStatusElement = document.getElementById('paymentStatus');
+
+            if (totalAmountPaid === amountToPay) {
+                paymentStatusElement.textContent = 'Payment Successful';
+                paymentStatusElement.style.color = '#2ecc71'; // Green color for success
+
+                // Redirect to the fifth page after successful payment
+                setTimeout(function() {
+                    window.location.href = 'fifth_page.html';
+                }, 1000); // Redirect after 1 second (adjust as needed)
+            } else if (totalAmountPaid < amountToPay) {
+                paymentStatusElement.textContent = 'Insufficient Money Paid';
+                paymentStatusElement.style.color = '#e74c3c'; // Red color for error
+            } else {
+                const changeAmount = totalAmountPaid - amountToPay;
+        paymentStatusElement.textContent = `Collect your change: ${changeAmount.toFixed(2)} INR`;
+        paymentStatusElement.style.color = '#7b572f'; // Brown color for change amount
+        
+        // Redirect to the fifth page if there's remaining money
+        setTimeout(function() {
+            window.location.href = 'fifth_page.html';
+        }, 1000);
+            }
+        }
+
+        // Function to cancel the order and redirect back to the first page
+        function cancelOrder() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize the currency items
+        const currencyList = document.getElementById('currencyList');
+        for (const denomination of currencyDenominations) {
+            const currencyItem = createCurrencyItem(denomination);
+            currencyList.appendChild(currencyItem);
+        }
+
+        // Update the total amount initially
+        updateTotalAmount();
+    </script>
+</body>
+</html>
+
+
+

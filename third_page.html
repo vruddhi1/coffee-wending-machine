@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        /* Add your CSS styles here for styling the third page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .order-details {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .proceed-button, .cancel-button, .money-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .proceed-button {
+            background-color: #7b572f;
+            color: #fff;
+        }
+        .proceed-button:hover {
+            background-color: #6a4b26;
+        }
+        .cancel-button {
+            background-color: #ddd;
+            color: #333;
+        }
+        .money-button {
+            background-color: #4caf50;
+            color: #fff;
+        }
+        .money-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Summary</h1>
+        <div class="order-details">
+            <p>You've ordered:</p>
+            <h2 id="selectedCoffee"></h2>
+            <p>Quantity:</p>
+            <h3 id="quantity"></h3>
+            <p>Total Amount:</p>
+            <h3 class="total-amount" id="orderPrice"></h3>
+        </div>
+        <button type="button" class="money-button" onclick="enterMoney()">Enter Money</button>
+        <button type="button" class="cancel-button" onclick="cancelOrder()">Cancel</button>
+    </div>
+
+    <script>
+        // Retrieve the selected coffee and quantity from sessionStorage
+        const selectedCoffee = sessionStorage.getItem('selectedCoffee');
+        const quantity = sessionStorage.getItem('quantity');
+
+        if (selectedCoffee && quantity) {
+            document.getElementById('selectedCoffee').textContent = selectedCoffee;
+            document.getElementById('quantity').textContent = quantity;
+            
+            // Calculate and display the total amount
+            const pricePerCup = getPriceForCoffee(selectedCoffee); // Define this function or set prices manually
+            const orderPrice = pricePerCup * parseInt(quantity);
+            document.getElementById('orderPrice').textContent = `${orderPrice.toFixed(2)}`;
+        } else {
+            // Handle the case where there is missing data
+            alert('Missing order information. Please go back and place an order.');
+            window.location.href = 'index.html';
+        }
+
+        function enterMoney() {
+            // Redirect to the fourth page where the user can enter money
+            //const pricePerCup = 3.50; // Replace with your actual price
+           // const OrderPrice = pricePerCup * quantity;
+
+            // Store the order price in sessionStorage
+            //sessionStorage.setItem('orderPrice', orderPrice);
+            //sessionStorage.setItem('orderPrice', orderPrice.toString());
+            const selectedCoffee = sessionStorage.getItem('selectedCoffee');
+            const quantity = sessionStorage.getItem('quantity');
+            const pricePerCup = getPriceForCoffee(selectedCoffee); // Define this function or set prices manually
+            const orderPrice = pricePerCup * parseInt(quantity);
+
+    // Store the order price in sessionStorage
+    sessionStorage.setItem('orderPrice', orderPrice.toString());
+            window.location.href = 'fourth_page.html';
+        }
+
+        function cancelOrder() {
+            // Redirect back to the first page
+            window.location.href = 'index.html';
+        }
+
+        // Define a function to get the price for a specific coffee (you can use this or set prices manually)
+        function getPriceForCoffee(coffeeName) {
+            // Define prices for different coffees
+            const coffeePrices = {
+                'Espresso': 100,
+                'Cappuccino': 150,
+                'Latte': 200,
+                'Americano': 250,
+                // Add more coffee prices as needed
+            };
+
+            return coffeePrices[coffeeName] || 0; // Default to 0 if the coffee is not found
+        }
+    </script>
+</body>
+</html>
+

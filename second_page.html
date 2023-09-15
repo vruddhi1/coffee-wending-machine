@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Coffee</title>
+        <style>
+            /* Add your CSS styles here for styling the second page */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f7f7f7;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                text-align: center;
+            }
+            .order-details {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .proceed-button, .cancel-button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                margin: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .proceed-button {
+                background-color: #7b572f;
+                color: #fff;
+            }
+            .proceed-button:hover {
+                background-color: #6a4b26;
+            }
+            .cancel-button {
+                background-color: #ddd;
+                color: #333;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <h1>Order Coffee</h1>
+        <div class="order-details">
+            <p>You've selected:</p>
+            <h2 id="selectedCoffee"></h2>
+            <label for="quantity">How many cups would you like to order?</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+        </div>
+        <button type="button" class="proceed-button" onclick="proceedToCheckout()">Proceed</button>
+        <button type="button" class="cancel-button" onclick="cancelOrder()">Cancel</button>
+    </div>
+
+    <script>
+        // Retrieve the selected coffee from sessionStorage
+        const selectedCoffee = sessionStorage.getItem('selectedCoffee');
+        if (selectedCoffee) {
+            document.getElementById('selectedCoffee').textContent = selectedCoffee;
+        } else {
+            // Handle the case where there is no selected coffee (e.g., if the user accessed this page directly)
+            alert('No coffee selected. Please go back and select a coffee.');
+            window.location.href = 'index.html';
+        }
+
+        function proceedToCheckout() {
+            const quantity = document.getElementById('quantity').value;
+            
+            // Store the quantity in sessionStorage
+            sessionStorage.setItem('quantity', quantity);
+
+            // Redirect to the third page
+            window.location.href = 'third_page.html';
+        }
+
+        function cancelOrder() {
+            // Redirect back to the first page
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+
+

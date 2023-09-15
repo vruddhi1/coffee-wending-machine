@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you</title>
+    <style>
+        /* Add your CSS styles here for styling the fifth page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .loading-bar-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .loading-bar {
+            width: 0;
+            height: 20px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            color: #fff;
+        }
+        .thank-you-message {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Please place the cup under the vending machine</h1>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar">0%</div>
+        </div>
+        <div class="thank-you-message" id="thankYouMessage"></div>
+    </div>
+
+    <script>
+        // Function to start the loading animation
+        function startLoading() {
+            const loadingBar = document.getElementById('loadingBar');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            
+            let progress = 0;
+            const interval = 100; // Milliseconds (adjust as needed)
+            const totalTime = 10000; // 10 seconds
+
+            const updateProgress = () => {
+                progress += (interval / totalTime) * 100;
+                loadingBar.style.width = progress + '%';
+                loadingBar.textContent = `${progress.toFixed(0)}%`;
+
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    thankYouMessage.textContent = 'Thank you!';
+                }
+            };
+
+            const loadingInterval = setInterval(updateProgress, interval);
+        }
+
+        // Start the loading animation when the page loads
+        window.onload = startLoading;
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
